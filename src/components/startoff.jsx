@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import NumericInput from 'react-numeric-input';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 class StartOff extends Component {
     state = {
         inputYear:new Date().getFullYear(),
@@ -16,11 +15,7 @@ class StartOff extends Component {
         })
     }
     handleClickButton = ()=>{
-        axios.post(`http://10.37.156.42:8000/api/crawl?year=${this.state.inputYear}`).then(function(response){
-            console.log("done")
-        }).catch(function(error){
-            console.log(error)
-        })
+        this.props.funcs.CrawlEvents(this.state.inputYear)
     }
     render() { 
         return (
