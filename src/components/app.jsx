@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import EventsDisplay from './events_display'
 import EventsEdit from './events_edit';
 import axios from 'axios';
+import Editor from './editor';
 
 class App extends Component {
     state = {
@@ -11,10 +12,19 @@ class App extends Component {
         details:[],
         process_detail_done:false,
         process_detail_time:0,
+        finalText:""
     } 
+    FormatFinalText = (details)=>{
+        let res = "## 年鉴\n"
+        for (let obj of details){
+            res+='- '+obj.detail.trim()+'\n\n'
+        }
+        console.log(res)
+        return  res
+    }
     AppFuncs= {
         MultiGetEventsByYear:(year)=>{
-            axios.get(`http://10.37.156.42:8000/api/year2events?year=${year}`).then((response)=>{
+            axios.get(`http://0.0.0.0:8000/api/year2events?year=${year}`).then((response)=>{
                 response.data.events.forEach(e=>{
                     e.selected = 0 
                 })
@@ -38,7 +48,7 @@ class App extends Component {
             })
         },
         CrawlEvents : (year)=>{
-            axios.post(`http://10.37.156.42:8000/api/crawl?year=${year}`).then((response)=>{
+            axios.post(`http://0.0.0.0:8000/api/crawl?year=${year}`).then((response)=>{
                 this.AppFuncs.MultiGetEventsByYear(year)
             }).catch(function(error){
                 console.log(error)
@@ -54,7 +64,7 @@ class App extends Component {
             let details = []
             let finished = {}
             selectedEvents.forEach(e=>{
-                axios.get(`http://10.37.156.42:8000/api/event_detail?uri=${e.uri}`).then((resp)=>{
+                axios.get(`http://0.0.0.0:8000/api/event_detail?uri=${e.uri}`).then((resp)=>{
                     console.log(e.title,resp.data)
                     details.push({
                         title : e.title,
@@ -75,7 +85,9 @@ class App extends Component {
                 this.setState({
                     process_detail_done: true,
                     details: details,
+                    finalText: this.FormatFinalText(details)
                 })
+                console.log(this.FormatFinalText(details))
                 clearInterval(this.process_detail_interval)
                 clearInterval(tempInterval)
             }, 1000);
@@ -96,6 +108,7 @@ class App extends Component {
                     process_detail_time  = {this.state.process_detail_time}
                     details = {this.state.details}
                     />}></Route>
+                    <Route path='editor' element={<Editor funcs={this.AppFuncs} finalText={this.state.finalText}/>} />
                 </Route>
             </Routes>
         </div>

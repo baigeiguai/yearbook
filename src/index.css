@@ -1,5 +1,47 @@
-.start-off{
-    position: relative;
-    top: 40vh;
-    left: 25vw;
+body{
+    height: 100%;
 }
+.start-off-half{
+    margin-top: 20%;
+    width: 45%;
+    height: 50vh;
+    border: black 10px solid;
+    float: left;
+}
+.start-off-left-title{
+    position: relative;
+    top: 9vh;
+    padding-left: 10%;
+    padding-right: 25%;
+    letter-spacing: 1vw;
+    text-align: right;
+}
+.start-off-left-year{
+    padding-left: 22%;
+    position: relative;
+    top: 15vh;
+}
+.start-off-left-year-input{
+    outline-style: none ;
+    left: 10%;
+    width: 80%;
+    height: 3vh;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 3px;
+}
+.start-off-left-year-input:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+}
+
+.start-off-left-year-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+/* 
+..start-off-left-year-input
+.start-off-left-year-button{
+    
+} */
